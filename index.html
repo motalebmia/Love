@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Love Page</title>
 <style>
-  *{margin:0; padding:0; box-sizing:border-box;}
+  *{margin:0;padding:0;box-sizing:border-box;}
   body{
     height:100vh;
     overflow:hidden;
@@ -17,6 +17,7 @@
     background-size: 400% 400%;
     animation: bgAnim 15s ease infinite;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: relative;
   }
 
   @keyframes bgAnim{
@@ -36,17 +37,22 @@
   .heart{
     position:absolute;
     bottom:0;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    font-weight:bold;
-    color:#fff;
-    border-radius:50%;
+    width:50px;
+    height:50px;
     cursor:pointer;
     pointer-events:auto;
     user-select:none;
     animation: floatUp linear forwards;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:50%;
+    background-color:#ff4d6d;
+    color:white;
+    font-size:12px; /* choto naam */
+    text-align:center;
+    line-height:1;
+    font-weight:bold;
   }
 
   @keyframes floatUp{
@@ -63,20 +69,36 @@
     100%{transform:scale(2.5);opacity:0;}
   }
 
-  .love-text{
-    position:relative;
-    z-index:10;
+  .love-box{
+    position:fixed;
+    bottom:20px;
     width:90%;
     max-width:500px;
+    padding:15px 20px;
     background:rgba(255,255,255,0.15);
-    padding:20px;
-    border-radius:25px;
+    backdrop-filter:blur(8px);
+    border-radius:20px;
     text-align:center;
     color:#fff;
-    font-size:18px;
-    margin-bottom:20px;
-    backdrop-filter:blur(10px);
-    line-height:1.6;
+    font-size:16px;
+    line-height:1.5;
+    z-index:10;
+  }
+
+  /* Floating tiny particles around heart */
+  .particle{
+    position:absolute;
+    width:5px;
+    height:5px;
+    background:rgba(255,255,255,0.8);
+    border-radius:50%;
+    pointer-events:none;
+    animation: particleAnim linear forwards;
+  }
+
+  @keyframes particleAnim{
+    0%{transform:translate(0,0);opacity:1;}
+    100%{transform:translate(var(--x,0),var(--y,-60px));opacity:0;}
   }
 </style>
 </head>
@@ -84,56 +106,74 @@
 
 <div class="heart-container"></div>
 
-<div class="love-text">
+<div class="love-box">
   নাজমিন এবং মোতালেবের ভালোবাসা অনন্ত।<br>
   প্রতিটি মুহূর্ত তাদের জন্য আনন্দ এবং একে অপরের প্রতি শ্রদ্ধা ও যত্নের সাক্ষী।<br>
   সত্যিকারের ভালোবাসা হলো একে অপরকে বোঝা, সম্মান করা এবং প্রতিদিনকে আরও সুন্দর করে তোলা।
 </div>
 
 <script>
-const heartContainer = document.querySelector('.heart-container');
-const names = ["নাজমিন","মোতালেব"];
-const colors = ["#ff4d6d","#ff6f91","#ff9671","#ffc75f","#f9f871"];
-const sizes = [30,35,40,45,50,55];
+const heartContainer=document.querySelector('.heart-container');
+const names=["নাজমিন","মোতালেব"];
+const colors=["#ff4d6d","#ff6f91","#ff9671","#ffc75f","#f9f871"];
+const sizes=[40,45,50,55,60];
 
 function createHeart(){
-  const heart = document.createElement('div');
+  const heart=document.createElement('div');
   heart.classList.add('heart');
 
-  // random name
-  heart.textContent = names[Math.floor(Math.random()*names.length)];
+  // Random name choto
+  heart.textContent=names[Math.floor(Math.random()*names.length)];
 
-  // random color
-  const color = colors[Math.floor(Math.random()*colors.length)];
-  heart.style.backgroundColor = color;
+  // Random color
+  heart.style.backgroundColor=colors[Math.floor(Math.random()*colors.length)];
 
-  // random size
-  const size = sizes[Math.floor(Math.random()*sizes.length)];
-  heart.style.width = size + "px";
-  heart.style.height = size + "px";
-  heart.style.fontSize = (size/3) + "px";
-  heart.style.lineHeight = size + "px";
+  // Random size
+  const size=sizes[Math.floor(Math.random()*sizes.length)];
+  heart.style.width=size+'px';
+  heart.style.height=size+'px';
+  heart.style.fontSize=(size/4)+'px'; // choto text
+  heart.style.lineHeight='1';
 
-  // horizontal position
-  heart.style.left = Math.random()*90 + "vw";
+  // Random horizontal position
+  heart.style.left=Math.random()*90+'vw';
 
-  // animation duration
-  heart.style.animationDuration = (5 + Math.random()*5) + "s";
+  // Random animation duration
+  heart.style.animationDuration=(5+Math.random()*5)+'s';
 
-  // click to explode
+  // Click to explode
   heart.addEventListener('click',()=>{
     heart.classList.add('blast');
+    createParticles(heart);
     setTimeout(()=>heart.remove(),500);
   });
 
   heartContainer.appendChild(heart);
 
-  // remove after 10s
+  // Remove after 10s
   setTimeout(()=>heart.remove(),10000);
 }
 
-// create hearts continuously
-setInterval(createHeart,400);
+// create floating tiny particles around heart
+function createParticles(heart){
+  const count=5;
+  for(let i=0;i<count;i++){
+    const p=document.createElement('div');
+    p.classList.add('particle');
+    const x=(Math.random()-0.5)*50;
+    const y=-Math.random()*60;
+    p.style.left=heart.offsetLeft + heart.offsetWidth/2 + 'px';
+    p.style.top=heart.offsetTop + heart.offsetHeight/2 + 'px';
+    p.style.setProperty('--x',x+'px');
+    p.style.setProperty('--y',y+'px');
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),1000);
+  }
+}
+
+// continuously create hearts
+setInterval(createHeart,500);
 </script>
+
 </body>
 </html>
