@@ -3,85 +3,81 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>প্রেমের পেজ</title>
+<title>Love Page</title>
 <style>
-  /* Reset and base styles */
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(to top, #ff9a9e, #fad0c4); 
-    overflow: hidden;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
+  *{margin:0; padding:0; box-sizing:border-box;}
+  body{
+    height:100vh;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    align-items:center;
+    background: linear-gradient(160deg,#ff9a9e,#fad0c4,#fbc2eb);
+    background-size: 400% 400%;
+    animation: bgAnim 15s ease infinite;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
 
-  /* Container for hearts */
-  .heart-container {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
+  @keyframes bgAnim{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
   }
 
-  /* Heart style */
-  .heart {
-    position: absolute;
-    bottom: 0;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-weight: bold;
-    border-radius: 50%;
-    padding: 10px;
-    user-select: none;
-    pointer-events: auto;
+  .heart-container{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+  }
+
+  .heart{
+    position:absolute;
+    bottom:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    font-weight:bold;
+    color:#fff;
+    border-radius:50%;
+    cursor:pointer;
+    pointer-events:auto;
+    user-select:none;
     animation: floatUp linear forwards;
   }
 
-  @keyframes floatUp {
-    0% { transform: translateY(0) scale(1); opacity: 1; }
-    80% { opacity: 1; }
-    100% { transform: translateY(-120vh) scale(1.2); opacity: 0; }
+  @keyframes floatUp{
+    0%{transform:translateY(0);}
+    100%{transform:translateY(-120vh);}
   }
 
-  /* Blast animation */
-  .blast {
+  .blast{
     animation: explode 0.5s forwards;
   }
 
-  @keyframes explode {
-    0% { transform: scale(1); opacity: 1; }
-    100% { transform: scale(2.5); opacity: 0; }
+  @keyframes explode{
+    0%{transform:scale(1);opacity:1;}
+    100%{transform:scale(2.5);opacity:0;}
   }
 
-  /* Bottom love text */
-  .love-text {
-    position: relative;
-    z-index: 10;
-    width: 90%;
-    max-width: 500px;
-    background: rgba(255,255,255,0.2);
-    padding: 20px;
-    border-radius: 20px;
-    text-align: center;
-    color: #fff;
-    font-size: 18px;
-    margin-bottom: 20px;
-    backdrop-filter: blur(5px);
-    animation: fadeInText 2s ease forwards;
+  .love-text{
+    position:relative;
+    z-index:10;
+    width:90%;
+    max-width:500px;
+    background:rgba(255,255,255,0.15);
+    padding:20px;
+    border-radius:25px;
+    text-align:center;
+    color:#fff;
+    font-size:18px;
+    margin-bottom:20px;
+    backdrop-filter:blur(10px);
+    line-height:1.6;
   }
-
-  @keyframes fadeInText {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
 </style>
 </head>
 <body>
@@ -89,58 +85,55 @@
 <div class="heart-container"></div>
 
 <div class="love-text">
-  নাজমিন এবং মোতালেবের ভালোবাসা সবসময় একে অপরের হৃদয়ে থাকবে।<br>
-  এ ভালোবাসা সময়ের সাথে আরও গভীর হবে, প্রতিটি মুহূর্তে তারা একে অপরের পাশে থাকবে।<br>
-  সত্যিকারের ভালোবাসা হল একে অপরকে বোঝা, শ্রদ্ধা করা এবং প্রতিটি দিনকে সুন্দর করে তোলা।
+  নাজমিন এবং মোতালেবের ভালোবাসা অনন্ত।<br>
+  প্রতিটি মুহূর্ত তাদের জন্য আনন্দ এবং একে অপরের প্রতি শ্রদ্ধা ও যত্নের সাক্ষী।<br>
+  সত্যিকারের ভালোবাসা হলো একে অপরকে বোঝা, সম্মান করা এবং প্রতিদিনকে আরও সুন্দর করে তোলা।
 </div>
 
 <script>
-  const heartContainer = document.querySelector('.heart-container');
+const heartContainer = document.querySelector('.heart-container');
+const names = ["নাজমিন","মোতালেব"];
+const colors = ["#ff4d6d","#ff6f91","#ff9671","#ffc75f","#f9f871"];
+const sizes = [30,35,40,45,50,55];
 
-  const names = ["নাজমিন", "মোতালেব"];
-  const colors = ["#ff4d6d", "#ff6f91", "#ff9671", "#ffc75f", "#f9f871"];
-  const sizes = [20, 25, 30, 35, 40, 45, 50];
+function createHeart(){
+  const heart = document.createElement('div');
+  heart.classList.add('heart');
 
-  function createHeart() {
-    const heart = document.createElement('div');
-    heart.classList.add('heart');
-    
-    // Random Name
-    heart.textContent = Math.random() < 0.7 ? names[0] : names[1];
+  // random name
+  heart.textContent = names[Math.floor(Math.random()*names.length)];
 
-    // Random Color
-    heart.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+  // random color
+  const color = colors[Math.floor(Math.random()*colors.length)];
+  heart.style.backgroundColor = color;
 
-    // Random Size
-    const size = sizes[Math.floor(Math.random() * sizes.length)];
-    heart.style.fontSize = `${size}px`;
-    heart.style.width = `${size*2}px`;
-    heart.style.height = `${size*2}px`;
-    heart.style.lineHeight = `${size*2}px`;
+  // random size
+  const size = sizes[Math.floor(Math.random()*sizes.length)];
+  heart.style.width = size + "px";
+  heart.style.height = size + "px";
+  heart.style.fontSize = (size/3) + "px";
+  heart.style.lineHeight = size + "px";
 
-    // Random horizontal position
-    heart.style.left = Math.random() * 90 + 'vw';
+  // horizontal position
+  heart.style.left = Math.random()*90 + "vw";
 
-    // Random animation duration
-    heart.style.animationDuration = (5 + Math.random() * 5) + 's';
+  // animation duration
+  heart.style.animationDuration = (5 + Math.random()*5) + "s";
 
-    // Click to explode
-    heart.addEventListener('click', () => {
-      heart.classList.add('blast');
-      setTimeout(() => heart.remove(), 500);
-    });
+  // click to explode
+  heart.addEventListener('click',()=>{
+    heart.classList.add('blast');
+    setTimeout(()=>heart.remove(),500);
+  });
 
-    heartContainer.appendChild(heart);
+  heartContainer.appendChild(heart);
 
-    // Remove after animation
-    setTimeout(() => {
-      heart.remove();
-    }, 10000);
-  }
+  // remove after 10s
+  setTimeout(()=>heart.remove(),10000);
+}
 
-  // Create hearts continuously
-  setInterval(createHeart, 500);
+// create hearts continuously
+setInterval(createHeart,400);
 </script>
-
 </body>
 </html>
