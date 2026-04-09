@@ -5,29 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>প্রেমের পেজ</title>
 <style>
-  /* Reset & Base */
   * { margin: 0; padding: 0; box-sizing: border-box; }
+
   body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     height: 100vh;
     overflow: hidden;
+    background: linear-gradient(160deg, #ff9a9e, #fad0c4, #fbc2eb);
+    background-size: 400% 400%;
+    animation: bgGradient 15s ease infinite;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    background: linear-gradient(160deg, #ff9a9e, #fad0c4, #fbc2eb);
-    background-size: 400% 400%;
-    animation: bgGradient 15s ease infinite;
   }
 
-  /* Background gradient animation */
   @keyframes bgGradient {
-    0%{background-position:0% 50%;}
-    50%{background-position:100% 50%;}
-    100%{background-position:0% 50%;}
+    0% {background-position:0% 50%;}
+    50% {background-position:100% 50%;}
+    100% {background-position:0% 50%;}
   }
 
-  /* Heart container */
   .heart-container {
     position: absolute;
     bottom: 0;
@@ -36,7 +34,6 @@
     pointer-events: none;
   }
 
-  /* Heart style */
   .heart {
     position: absolute;
     bottom: 0;
@@ -44,12 +41,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #fff;
     font-weight: bold;
+    color: white;
     border-radius: 50%;
-    padding: 10px;
-    user-select: none;
+    text-align: center;
+    line-height: 1;
     pointer-events: auto;
+    user-select: none;
     animation: floatUp linear forwards;
   }
 
@@ -59,20 +57,6 @@
     100% { transform: translateY(-120vh) scale(1.3); opacity: 0; }
   }
 
-  /* Heart pulse */
-  .heart {
-    animation-name: floatUp, pulse;
-    animation-iteration-count: 1, infinite;
-    animation-timing-function: linear, ease-in-out;
-  }
-
-  @keyframes pulse {
-    0% { transform: scale(1) rotate(0deg);}
-    50% { transform: scale(1.2) rotate(5deg);}
-    100% { transform: scale(1) rotate(-5deg);}
-  }
-
-  /* Blast effect */
   .blast {
     animation: explode 0.5s forwards;
   }
@@ -82,7 +66,6 @@
     100% { transform: scale(2.5); opacity: 0; }
   }
 
-  /* Bottom love text */
   .love-text {
     position: relative;
     z-index: 10;
@@ -96,14 +79,9 @@
     font-size: 18px;
     margin-bottom: 20px;
     backdrop-filter: blur(10px);
-    animation: fadeInText 2s ease forwards;
     line-height: 1.6;
   }
 
-  @keyframes fadeInText {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
 </style>
 </head>
 <body>
@@ -118,33 +96,33 @@
 
 <script>
   const heartContainer = document.querySelector('.heart-container');
-
   const names = ["নাজমিন", "মোতালেব"];
   const colors = ["#ff4d6d", "#ff6f91", "#ff9671", "#ffc75f", "#f9f871"];
-  const sizes = [20, 25, 30, 35, 40, 45, 50];
+  const sizes = [30, 35, 40, 45, 50, 55];
 
   function createHeart() {
     const heart = document.createElement('div');
     heart.classList.add('heart');
 
-    // Random Name inside heart
-    heart.textContent = Math.random() < 0.7 ? names[0] : names[1];
+    // Random name
+    heart.textContent = names[Math.floor(Math.random() * names.length)];
 
     // Random background color
-    heart.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    heart.style.backgroundColor = color;
 
     // Random size
     const size = sizes[Math.floor(Math.random() * sizes.length)];
-    heart.style.fontSize = `${size}px`;
-    heart.style.width = `${size*2}px`;
-    heart.style.height = `${size*2}px`;
-    heart.style.lineHeight = `${size*2}px`;
+    heart.style.width = size + "px";
+    heart.style.height = size + "px";
+    heart.style.lineHeight = size + "px";
+    heart.style.fontSize = (size/3) + "px";
 
     // Random horizontal position
-    heart.style.left = Math.random() * 90 + 'vw';
+    heart.style.left = Math.random() * 90 + "vw";
 
     // Random animation duration
-    heart.style.animationDuration = (5 + Math.random() * 5) + 's, 2s ease-in-out infinite';
+    heart.style.animationDuration = (5 + Math.random()*5) + "s";
 
     // Click to explode
     heart.addEventListener('click', () => {
@@ -154,11 +132,12 @@
 
     heartContainer.appendChild(heart);
 
-    // Remove after animation
-    setTimeout(() => heart.remove(), 10000);
+    // Remove after 10s
+    setTimeout(() => {
+      heart.remove();
+    }, 10000);
   }
 
-  // Continuously create hearts
   setInterval(createHeart, 400);
 </script>
 
