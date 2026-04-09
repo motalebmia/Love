@@ -3,153 +3,219 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Love Animation</title>
 
-<!-- Ador Noirrit Bangla Font -->
+<!-- Font -->
 <link href="https://fonts.cdnfonts.com/css/li-ador-noirrit" rel="stylesheet">
 
+<title>Love Page</title>
+
 <style>
-  *{margin:0;padding:0;box-sizing:border-box;}
-  body {
-    height:100vh;
-    overflow:hidden;
-    display:flex;
-    flex-direction:column;
-    justify-content:flex-end;
-    align-items:center;
-    background: linear-gradient(160deg,#ff9a9e,#fad0c4,#fbc2eb);
-    background-size:400% 400%;
-    animation: bgAnim 15s ease infinite;
-    font-family: 'Li Ador Noirrit', sans-serif;
-    position:relative;
-  }
+*{margin:0;padding:0;box-sizing:border-box;}
 
-  @keyframes bgAnim {
-    0%{background-position:0% 50%;}
-    50%{background-position:100% 50%;}
-    100%{background-position:0% 50%;}
-  }
+body{
+  height:100vh;
+  overflow:hidden;
+  background:#000;
+  font-family:'Li Ador Noirrit', sans-serif;
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  flex-direction:column;
+}
 
-  .heart-container {
-    position:absolute;
-    bottom:0;
-    width:100%;
-    height:100%;
-    pointer-events:none;
-  }
+/* Snow */
+.snow{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+}
 
-  .heart {
-    position:absolute;
-    bottom:0;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    cursor:pointer;
-    pointer-events:auto;
-    user-select:none;
-    border-radius:50%;
-    background-color:#ff4d6d;
-    color:white;
-    animation: floatUp linear forwards;
-    box-shadow: 0px 2px 8px rgba(0,0,0,0.3);
-  }
+.snowflake{
+  position:absolute;
+  color:white;
+  font-size:10px;
+  animation:fall linear infinite;
+}
 
-  @keyframes floatUp {
-    0%{transform:translateY(0) scale(1);}
-    100%{transform:translateY(-120vh) scale(1.2);}
-  }
+@keyframes fall{
+  0%{transform:translateY(-10vh);}
+  100%{transform:translateY(110vh);}
+}
 
-  .blast {
-    animation: explode 0.4s forwards;
-    box-shadow: 0px 0px 15px rgba(255,255,255,0.9);
-  }
+/* Sparkles */
+.sparkle{
+  position:absolute;
+  width:3px;
+  height:3px;
+  background:white;
+  border-radius:50%;
+  opacity:0.8;
+  animation: sparkleAnim 2s linear infinite;
+}
 
-  @keyframes explode {
-    0%{transform:scale(1);}
-    100%{transform:scale(2.5);opacity:0;}
-  }
+@keyframes sparkleAnim{
+  0%{opacity:0;}
+  50%{opacity:1;}
+  100%{opacity:0;}
+}
 
-  .love-box {
-    position:fixed;
-    bottom:20px;
-    width:90%;
-    max-width:500px;
-    padding:20px;
-    background:rgba(255,255,255,0.15);
-    backdrop-filter:blur(8px);
-    border-radius:25px;
-    text-align:center;
-    color:#fff;
-    font-size:18px;
-    line-height:1.6;
-    z-index:10;
-    border: 4px solid;
-    border-image: linear-gradient(45deg, #ff4d6d, #ff6f91, #ffc75f) 1;
-    animation: floatBox 3s ease-in-out infinite alternate;
-    box-shadow: 0px 6px 20px rgba(0,0,0,0.4);
-  }
+/* Hearts */
+.heart-container{
+  position:absolute;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+}
 
-  @keyframes floatBox {
-    from {transform: translateY(0px);}
-    to {transform: translateY(-8px);}
-  }
+.heart{
+  position:absolute;
+  bottom:0;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  cursor:pointer;
+  pointer-events:auto;
+  user-select:none;
+  animation: floatUp linear forwards, pulse 1.5s infinite;
+  box-shadow:0 0 10px rgba(255,255,255,0.5);
+}
+
+@keyframes floatUp{
+  0%{transform:translateY(0);}
+  100%{transform:translateY(-120vh);}
+}
+
+@keyframes pulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.15);}
+  100%{transform:scale(1);}
+}
+
+.blast{
+  animation: explode 0.4s forwards;
+}
+
+@keyframes explode{
+  100%{transform:scale(2.5);opacity:0;}
+}
+
+/* Love Box */
+.love-box{
+  position:fixed;
+  bottom:20px;
+  width:90%;
+  max-width:500px;
+  padding:18px;
+  border-radius:20px;
+  text-align:center;
+  font-size:18px;
+  line-height:1.6;
+  z-index:10;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(6px);
+
+  border:2px solid;
+  border-image:linear-gradient(45deg,#ff4d6d,#ffc75f,#ff6f91) 1;
+
+  box-shadow:0 0 20px rgba(255,255,255,0.2);
+}
+
 </style>
 </head>
 <body>
 
+<div class="snow"></div>
 <div class="heart-container"></div>
 
 <div class="love-box" id="loveText">
-  আজ আমার হৃদয় শুধু তোমারই জন্য স্পন্দিত…
+  তুমি আমার হৃদয়ের সবচেয়ে সুন্দর অনুভূতি…
 </div>
 
+<!-- Sound -->
+<audio id="popSound" src="https://www.fesliyanstudios.com/play-mp3/387"></audio>
+
 <script>
-  const heartContainer = document.querySelector('.heart-container');
-  const loveText = document.getElementById('loveText');
+const heartContainer=document.querySelector('.heart-container');
+const loveText=document.getElementById('loveText');
+const snowContainer=document.querySelector('.snow');
+const sound=document.getElementById('popSound');
 
-  const hearts = ["নাজমিন","মোতালেব"];
-  const colors = ["#ff4d6d","#ff6f91","#ff9671","#ffc75f","#f9f871"];
-  const sizes = [40,45,50,55,60];
-  const phrases = [
-    "আমি তোমাকে অশেষ ভালোবাসি…",
-    "তোমার হাসিই আমার শোনার গান…",
-    "প্রতিটি দিন শুধুই তোমার নামের সঙ্গে শুরু করি…",
-    "তুমি ছাড়া দিনটা যেন অসম্পূর্ণ…",
-    "হৃদয় কেবল তোমার জন্যই স্পন্দিত…"
-  ];
+const names=["নাজমিন","মোতালেব"];
+const colors=["#ff4d6d","#ff6f91","#ffc75f","#00f5d4","#f15bb5"];
+const phrases=[
+ "তুমি আমার স্বপ্নের সবচেয়ে সুন্দর অংশ…",
+ "তোমাকে ছাড়া সব কিছু ফাঁকা লাগে…",
+ "তোমার হাসি আমার পৃথিবী আলোকিত করে…",
+ "আমার প্রতিটি ভালোবাসা শুধু তোমার জন্য…",
+ "তুমি আমার হৃদয়ের শান্তি…"
+];
 
-  function createHeart(){
-    const heart = document.createElement('div');
-    heart.classList.add('heart');
+// Snow
+function createSnow(){
+  const snow=document.createElement('div');
+  snow.classList.add('snowflake');
+  snow.innerHTML="❄";
+  snow.style.left=Math.random()*100+"vw";
+  snow.style.animationDuration=(3+Math.random()*5)+"s";
+  snowContainer.appendChild(snow);
+  setTimeout(()=>snow.remove(),8000);
+}
+setInterval(createSnow,100);
 
-    // random name
-    heart.textContent = hearts[Math.floor(Math.random()*hearts.length)];
+// Sparkles
+function createSparkle(){
+  const s=document.createElement('div');
+  s.classList.add('sparkle');
+  s.style.left=Math.random()*100+"vw";
+  s.style.top=Math.random()*100+"vh";
+  document.body.appendChild(s);
+  setTimeout(()=>s.remove(),2000);
+}
+setInterval(createSparkle,200);
 
-    // random color
-    heart.style.background = colors[Math.floor(Math.random()*colors.length)];
+// Hearts
+function createHeart(){
+  const heart=document.createElement('div');
+  heart.classList.add('heart');
 
-    // random size
-    const size = sizes[Math.floor(Math.random()*sizes.length)];
-    heart.style.width = size + "px";
-    heart.style.height = size + "px";
-    heart.style.fontSize = (size/3) + "px";
+  const size=40+Math.random()*30;
+  heart.style.width=size+"px";
+  heart.style.height=size+"px";
 
-    // position
-    heart.style.left = Math.random()*90 + "vw";
-    heart.style.animationDuration = (5 + Math.random()*4) + "s";
+  const color=colors[Math.floor(Math.random()*colors.length)];
+  heart.style.background=color;
 
-    // click effect
-    heart.addEventListener('click', ()=>{
-      heart.classList.add('blast');
-      loveText.textContent = phrases[Math.floor(Math.random()*phrases.length)];
-      setTimeout(()=> heart.remove(), 400);
-    });
+  const textColor=colors[Math.floor(Math.random()*colors.length)];
+  heart.style.color=textColor;
 
-    heartContainer.appendChild(heart);
-    setTimeout(()=>heart.remove(),10000);
-  }
+  heart.textContent=names[Math.floor(Math.random()*names.length)];
+  heart.style.fontSize=(size/4)+"px";
 
-  setInterval(createHeart,400);
+  heart.style.left=Math.random()*90+"vw";
+  heart.style.animationDuration=(5+Math.random()*5)+"s";
+
+  heart.onclick=()=>{
+    heart.classList.add('blast');
+    sound.play();
+
+    // change love text
+    loveText.textContent=phrases[Math.floor(Math.random()*phrases.length)];
+
+    // change text color
+    loveText.style.color=colors[Math.floor(Math.random()*colors.length)];
+
+    setTimeout(()=>heart.remove(),400);
+  };
+
+  heartContainer.appendChild(heart);
+  setTimeout(()=>heart.remove(),10000);
+}
+
+setInterval(createHeart,400);
 </script>
 
 </body>
